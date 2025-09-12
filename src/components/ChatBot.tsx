@@ -32,19 +32,21 @@ const ChatBot = () => {
     {
       id: '1',
       type: 'bot',
-      content: 'Hello! I\'m your Tribal Affairs assistant. How can I help you today?',
+      content: 'नमस्ते! मैं आपका FRA Help Desk असिस्टेंट हूं। वन अधिकार अधिनियम 2006 के बारे में कैसे मदद कर सकता हूं? 🌲',
       timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
 
   const quickActions = [
-    "Check application status",
-    "Apply for PM Kisan",
-    "Land patta information", 
-    "Jal Jeevan Mission",
-    "Contact officer",
-    "Upload documents"
+    "Forest Rights Act 2006 क्या है?",
+    "Individual Forest Rights (IFR)",
+    "Community Forest Rights (CFR)", 
+    "आवेदन की स्थिति जांचें",
+    "आवश्यक दस्तावेज़",
+    "भूमि पट्टा प्रक्रिया",
+    "ग्राम सभा की भूमिका",
+    "अपील प्रक्रिया"
   ];
 
   const handleSendMessage = () => {
@@ -76,27 +78,48 @@ const ChatBot = () => {
   const getBotResponse = (userInput: string): string => {
     const input = userInput.toLowerCase();
     
-    if (input.includes('status') || input.includes('application')) {
-      return 'To check your application status, please provide your Application ID (e.g., TB001234) or use the Status Checker from the main menu.';
+    // FRA 2006 specific responses
+    if (input.includes('forest rights act') || input.includes('fra') || input.includes('वन अधिकार')) {
+      return 'वन अधिकार अधिनियम 2006 वन में रहने वाले समुदायों को भूमि और वन संसाधनों पर अधिकार प्रदान करता है। यह Individual Forest Rights (IFR), Community Rights (CR), और Community Forest Resource Rights (CFR) को मान्यता देता है। क्या आप किसी विशिष्ट प्रकार के अधिकार के बारे में जानना चाहते हैं?';
     }
     
-    if (input.includes('pm kisan') || input.includes('kisan')) {
-      return 'PM Kisan Yojana provides ₹6,000 annual financial support to farmers. You can apply through our application form. Do you need help with the application process?';
+    if (input.includes('individual forest rights') || input.includes('ifr') || input.includes('व्यक्तिगत वन अधिकार')) {
+      return 'Individual Forest Rights (IFR): 4 हेक्टेयर तक की कृषि भूमि के लिए व्यक्तिगत अधिकार। आवेदन के लिए आवश्यक: निवास प्रमाण, कृषि कार्य का प्रमाण, सामुदायिक समर्थन। ग्राम सभा से अनुमोदन आवश्यक है।';
     }
     
-    if (input.includes('land') || input.includes('patta')) {
-      return 'For land patta applications, you need to provide ownership documents, identity proof, and location details. Would you like me to guide you through the application process?';
+    if (input.includes('community forest rights') || input.includes('cfr') || input.includes('सामुदायिक वन अधिकार')) {
+      return 'Community Forest Resource Rights (CFR): समुदाय को वन संसाधनों के सुरक्षा, प्रबंधन और उपयोग के अधिकार। इसमें लघु वनोपज, मत्स्य पालन, चारागाह शामिल हैं। ग्राम सभा द्वारा आवेदन करना होता है।';
     }
     
-    if (input.includes('contact') || input.includes('officer')) {
-      return 'You can contact your assigned officer through the application details page. For general inquiries, call our helpline: 1800-XXX-XXXX or email: help@tribalpotal.gov.in';
+    if (input.includes('gram sabha') || input.includes('ग्राम सभा')) {
+      return 'ग्राम सभा FRA में केंद्रीय भूमिका निभाती है: 1) अधिकारों की पहचान और सत्यापन 2) दावों का अनुमोदन 3) वन संसाधन प्रबंधन समिति का गठन 4) CFR के लिए नियम निर्धारण। सभी FRA आवेदन ग्राम सभा से होकर गुजरते हैं।';
     }
     
-    if (input.includes('document') || input.includes('upload')) {
-      return 'Required documents include: Aadhar Card, Tribal Certificate, Income Certificate, and Bank Passbook. You can upload these during the application process.';
+    if (input.includes('status') || input.includes('application') || input.includes('स्थिति')) {
+      return 'आपकी आवेदन स्थिति जांचने के लिए: 1) अपना Application ID दें (जैसे TB001234) 2) मुख्य मेनू से Status Checker का उपयोग करें 3) अपने गांव के FRO से संपर्क करें। वर्तमान में आवेदन की प्रगति: भूमि सर्वेक्षण → ग्राम सभा अनुमोदन → पट्टा जारी करना।';
     }
     
-    return 'I can help you with application status, government schemes, land records, and general information. Could you please be more specific about what you need help with?';
+    if (input.includes('document') || input.includes('दस्तावेज़')) {
+      return 'FRA आवेदन के लिए आवश्यक दस्तावेज़: 1) आधार कार्ड 2) जनजातीय प्रमाण पत्र 3) निवास प्रमाण (75 साल पुराना) 4) भूमि कब्जे का प्रमाण 5) सामुदायिक समर्थन पत्र 6) वन विभाग की NOC (यदि लागू हो) 7) GPS निर्देशांक के साथ भूमि का नक्शा।';
+    }
+    
+    if (input.includes('appeal') || input.includes('अपील')) {
+      return 'FRA अपील प्रक्रिया: यदि आपका दावा खारिज हो गया है, तो आप 60 दिनों के भीतर अपील कर सकते हैं। अपील Sub-Divisional Committee (SDC) → District Level Committee (DLC) → State Level Monitoring Committee के क्रम में होती है।';
+    }
+    
+    if (input.includes('patta') || input.includes('पट्टा')) {
+      return 'FRA पट्टा प्राप्त करने की प्रक्रिया: 1) ग्राम सभा में आवेदन 2) भूमि सर्वेक्षण और सत्यापन 3) Sub-Divisional Committee की जांच 4) District Level Committee का अनुमोदन 5) पट्टा जारी करना। पूरी प्रक्रिया में 6-12 महीने लग सकते हैं।';
+    }
+    
+    if (input.includes('contact') || input.includes('officer') || input.includes('संपर्क')) {
+      return 'संपर्क जानकारी: 1) Forest Rights Officer (FRO) - गांव स्तर पर 2) Sub-Divisional Officer - तहसील स्तर 3) District Collector - जिला स्तर 4) हेल्पलाइन: 1800-XXX-XXXX 5) ईमेल: fra@tribal.gov.in। आपातकाल के लिए 24×7 सपोर्ट उपलब्ध है।';
+    }
+    
+    if (input.includes('rejection') || input.includes('खारिज')) {
+      return 'यदि आपका FRA आवेदन खारिज हो गया है: 1) कारण जानने के लिए written order मांगें 2) 60 दिन के भीतर अपील दाखिल करें 3) अतिरिक्त दस्तावेज़ तैयार करें 4) Legal aid की सहायता लें 5) NGO या कानूनी सलाहकार से मदद लें।';
+    }
+    
+    return 'मैं वन अधिकार अधिनियम 2006, IFR/CFR आवेदन, ग्राम सभा प्रक्रिया, और FRA से संबंधित सभी जानकारी में आपकी सहायता कर सकता हूं। कृपया अपने प्रश्न को और स्पष्ट करें। आप हिंदी या अंग्रेजी में पूछ सकते हैं।';
   };
 
   const handleQuickAction = (action: string) => {
@@ -127,7 +150,7 @@ const ChatBot = () => {
                 <Bot className="h-4 w-4 text-white" />
               </div>
               <div>
-                <CardTitle className="text-sm">Help Assistant</CardTitle>
+                <CardTitle className="text-sm">FRA Help Desk</CardTitle>
                 <div className="flex items-center space-x-1">
                   <div className="w-2 h-2 rounded-full bg-green-500"></div>
                   <span className="text-xs text-muted-foreground">Online</span>
@@ -205,14 +228,14 @@ const ChatBot = () => {
             {/* Quick Actions */}
             {messages.length === 1 && (
               <div className="p-4 border-t bg-muted/30">
-                <p className="text-xs text-muted-foreground mb-2">Quick actions:</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {quickActions.slice(0, 4).map((action, index) => (
+                <p className="text-xs text-muted-foreground mb-2">जल्दी सहायता के लिए:</p>
+                <div className="grid grid-cols-1 gap-1">
+                  {quickActions.slice(0, 6).map((action, index) => (
                     <Button
                       key={index}
                       variant="outline"
                       size="sm"
-                      className="text-xs h-8"
+                      className="text-xs h-7 justify-start"
                       onClick={() => handleQuickAction(action)}
                     >
                       {action}
