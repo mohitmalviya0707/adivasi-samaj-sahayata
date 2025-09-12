@@ -40,11 +40,13 @@ const OfficerDashboard = () => {
       id: "TB001235", 
       name: "Sunita Devi",
       village: "Kalyanpur",
-      schemes: ["Forest Rights"],
+      schemes: ["Forest Rights Act 2006"],
       status: "under_review",
       submittedDate: "2024-01-12",
       deadline: "2024-01-25",
-      priority: "medium"
+      priority: "medium",
+      landArea: "2.5 acres",
+      landType: "Individual Forest Rights"
     },
     {
       id: "TB001236",
@@ -231,6 +233,7 @@ const OfficerDashboard = () => {
                     <p className="text-sm text-muted-foreground">
                       ID: {application.id} • {application.village} • 
                       Schemes: {application.schemes.join(", ")}
+                      {application.landArea && ` • Land: ${application.landArea}`}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       Submitted: {application.submittedDate} • Deadline: {application.deadline}

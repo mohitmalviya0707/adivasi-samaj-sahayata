@@ -29,9 +29,9 @@ const ApplicationForm = () => {
     },
     {
       id: "forest_rights",
-      name: "Forest Rights Act",
-      description: "Recognition of forest dwelling rights",
-      benefits: "Land ownership rights",
+      name: "Forest Rights Act 2006",
+      description: "Individual/Community Forest Rights for land ownership under FRA 2006",
+      benefits: "Land pattas, forest land titles, community forest rights",
     },
     {
       id: "scholarship",

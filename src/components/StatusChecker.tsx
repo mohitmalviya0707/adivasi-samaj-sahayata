@@ -31,21 +31,27 @@ const StatusChecker = () => {
     submittedDate: "2024-01-15",
     lastUpdated: "2024-01-20",
     expectedCompletion: "2024-01-30",
-    schemes: ["PM Kisan Yojana", "Jal Jeevan Mission"],
-    currentStage: "Document Verification",
-    nextAction: "Field Officer Visit",
+    schemes: ["Forest Rights Act 2006", "Jal Jeevan Mission"],
+    currentStage: "Land Survey & Verification",
+    nextAction: "Gram Sabha Approval",
+    landDetails: {
+      area: "2.5 acres",
+      type: "Individual Forest Rights",
+      surveyNumber: "FRA/2024/001",
+      location: "Bandipara Village, Forest Block-A"
+    },
     contactOfficer: {
       name: "Dr. Priya Singh",
-      designation: "Assistant District Collector",
+      designation: "Forest Rights Officer",
       phone: "+91-9876543210",
       email: "priya.singh@gov.in"
     },
     timeline: [
       { stage: "Application Submitted", date: "2024-01-15", status: "completed" },
       { stage: "Initial Review", date: "2024-01-17", status: "completed" },
-      { stage: "Document Verification", date: "2024-01-20", status: "in_progress" },
-      { stage: "Field Inspection", date: "2024-01-25", status: "pending" },
-      { stage: "Final Approval", date: "2024-01-30", status: "pending" }
+      { stage: "Land Survey & Verification", date: "2024-01-20", status: "in_progress" },
+      { stage: "Gram Sabha Approval", date: "2024-01-25", status: "pending" },
+      { stage: "Final Patta Issuance", date: "2024-01-30", status: "pending" }
     ]
   };
 
@@ -161,6 +167,18 @@ const StatusChecker = () => {
                       </Badge>
                     ))}
                   </div>
+                  
+                  {searchResult.landDetails && (
+                    <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                      <h5 className="font-medium text-green-900 mb-2">Land Details</h5>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div><span className="font-medium">Area:</span> {searchResult.landDetails.area}</div>
+                        <div><span className="font-medium">Type:</span> {searchResult.landDetails.type}</div>
+                        <div><span className="font-medium">Survey No:</span> {searchResult.landDetails.surveyNumber}</div>
+                        <div className="col-span-2"><span className="font-medium">Location:</span> {searchResult.landDetails.location}</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </CardContent>
