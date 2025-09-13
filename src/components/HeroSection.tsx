@@ -2,28 +2,30 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Shield, MapPin, FileText, Zap, CheckCircle } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface HeroSectionProps {
   onUserTypeSelect: (type: "citizen" | "officer") => void;
 }
 
 const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="space-y-12">
       {/* Hero Banner */}
       <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-government-blue via-government-orange to-government-green p-12 text-white">
         <div className="relative z-10 max-w-4xl">
           <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">
-            Government of India Initiative
+            {t('hero.badge')}
           </Badge>
           <h1 className="mb-6 text-5xl font-bold leading-tight">
-            Tribal Affairs
+            {t('hero.title_part1')}
             <br />
-            <span className="text-yellow-200">Digital Portal</span>
+            <span className="text-yellow-200">{t('hero.title_part2')}</span>
           </h1>
           <p className="mb-8 text-xl opacity-90 max-w-2xl">
-            Empowering tribal communities through digital governance. Apply for land rights, 
-            government benefits, and track your applications seamlessly.
+            {t('hero.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button 
@@ -32,7 +34,7 @@ const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
               onClick={() => onUserTypeSelect("citizen")}
             >
               <Users className="mr-2 h-5 w-5" />
-              I'm a Citizen
+              {t('hero.citizen_button')}
             </Button>
             <Button 
               size="lg" 
@@ -41,7 +43,7 @@ const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
               onClick={() => onUserTypeSelect("officer")}
             >
               <Shield className="mr-2 h-5 w-5" />
-              I'm an Officer
+              {t('hero.officer_button')}
             </Button>
           </div>
         </div>
@@ -52,9 +54,9 @@ const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
       {/* Services Grid */}
       <section>
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Available Services</h2>
+          <h2 className="text-3xl font-bold mb-4">{t('services.title')}</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Access government schemes and services designed specifically for tribal communities
+            {t('services.description')}
           </p>
         </div>
         
@@ -63,12 +65,12 @@ const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <MapPin className="h-6 w-6 text-government-orange" />
-                <span>Land Rights</span>
+                <span>{t('services.land_rights')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Apply for land patta, ownership documents, and land record verification
+                {t('services.land_rights_desc')}
               </p>
               <Badge variant="secondary">Forest Rights Act</Badge>
             </CardContent>

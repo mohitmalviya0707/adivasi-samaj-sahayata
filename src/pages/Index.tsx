@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Users, FileText, CheckCircle, MessageSquare, Calendar } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSelector from "@/components/LanguageSelector";
 import HeroSection from "@/components/HeroSection";
 import ApplicationForm from "@/components/ApplicationForm";
 import OfficerDashboard from "@/components/OfficerDashboard";
@@ -11,6 +13,7 @@ import MapVisualization from "@/components/MapVisualization";
 import ChatBot from "@/components/ChatBot";
 
 const Index = () => {
+  const { t } = useLanguage();
   const [activeSection, setActiveSection] = useState("home");
   const [userType, setUserType] = useState<"citizen" | "officer" | null>(null);
 
@@ -34,14 +37,14 @@ const Index = () => {
   };
 
   const citizenNavItems = [
-    { id: "apply", label: "Apply for Benefits", icon: FileText },
-    { id: "status", label: "Check Status", icon: CheckCircle },
-    { id: "map", label: "Land Records", icon: MapPin },
+    { id: "apply", label: t('nav.apply'), icon: FileText },
+    { id: "status", label: t('nav.status'), icon: CheckCircle },
+    { id: "map", label: t('nav.map'), icon: MapPin },
   ];
 
   const officerNavItems = [
-    { id: "dashboard", label: "Dashboard", icon: Users },
-    { id: "map", label: "Approved Lands", icon: MapPin },
+    { id: "dashboard", label: t('nav.dashboard'), icon: Users },
+    { id: "map", label: t('nav.approved_lands'), icon: MapPin },
   ];
 
   const navItems = userType === "citizen" ? citizenNavItems : officerNavItems;
@@ -56,12 +59,15 @@ const Index = () => {
               <Users className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-lg">Tribal Affairs Portal</h1>
-              <p className="text-xs text-muted-foreground">Government of India</p>
+              <h1 className="font-bold text-lg">{t('header.title')}</h1>
+              <p className="text-xs text-muted-foreground">{t('header.subtitle')}</p>
             </div>
           </div>
           
-          {userType && (
+          <div className="flex items-center space-x-4">
+            <LanguageSelector />
+          
+            {userType && (
             <nav className="flex items-center space-x-6">
               {navItems.map((item) => (
                 <Button
@@ -75,10 +81,11 @@ const Index = () => {
                 </Button>
               ))}
               <Badge variant="secondary" className="bg-government-green text-white">
-                {userType === "citizen" ? "Citizen" : "Officer"}
+                {userType === "citizen" ? t('header.citizen') : t('header.officer')}
               </Badge>
             </nav>
-          )}
+            )}
+          </div>
         </div>
       </header>
 
@@ -95,7 +102,7 @@ const Index = () => {
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="font-semibold mb-4">Quick Links</h3>
+              <h3 className="font-semibold mb-4">{t('footer.quick_links')}</h3>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <p>PM Kisan Yojana</p>
                 <p>Jal Jeevan Mission</p>
@@ -104,7 +111,7 @@ const Index = () => {
               </div>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Support</h3>
+              <h3 className="font-semibold mb-4">{t('footer.support')}</h3>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <p>Help Center</p>
                 <p>Contact Us</p>
@@ -113,7 +120,7 @@ const Index = () => {
               </div>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Government</h3>
+              <h3 className="font-semibold mb-4">{t('footer.government')}</h3>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <p>Ministry of Tribal Affairs</p>
                 <p>Digital India</p>
@@ -123,7 +130,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Government of India, Ministry of Tribal Affairs. All rights reserved.</p>
+            <p>{t('footer.copyright')}</p>
           </div>
         </div>
       </footer>

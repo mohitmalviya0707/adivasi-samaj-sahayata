@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,12 +13,10 @@ import {
   Minimize2,
   Phone,
   Mail,
-  HelpCircle,
-  FileText,
-  Clock,
   Languages
 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useLanguage, Language } from "@/contexts/LanguageContext";
 
 interface Message {
   id: string;
@@ -26,8 +24,6 @@ interface Message {
   content: string;
   timestamp: Date;
 }
-
-type Language = 'hi' | 'en' | 'od' | 'te' | 'bn';
 
 interface LanguageContent {
   welcome: string;
@@ -41,9 +37,10 @@ interface LanguageContent {
 }
 
 const ChatBot = () => {
+  const { currentLanguage: globalLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState<Language>('hi');
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(globalLanguage);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -135,15 +132,26 @@ const ChatBot = () => {
     }
   };
 
+  // Sync with global language
+  useEffect(() => {
+    setCurrentLanguage(globalLanguage);
+    setMessages([{
+      id: '1',
+      type: 'bot',
+      content: languageContent[globalLanguage].welcome,
+      timestamp: new Date()
+    }]);
+  }, [globalLanguage]);
+
   // Initialize messages when language changes
-  useState(() => {
+  useEffect(() => {
     setMessages([{
       id: '1',
       type: 'bot',
       content: languageContent[currentLanguage].welcome,
       timestamp: new Date()
     }]);
-  });
+  }, [currentLanguage]);
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
@@ -201,7 +209,7 @@ const ChatBot = () => {
       },
       te: {
         fra: 'అటవీ హక్కుల చట్టం 2006 అటవీ నివాస సమాజాలకు భూమి మరియు అటవీ వనరులపై హక్కులను కల్పిస్తుంది। ఇది వ్యక్తిగత అటవీ హక్కులు (IFR), సమాజిక హక్కులు (CR), మరియు సమాజిక అటవీ వనరుల హక్కులు (CFR)ను గుర్తిస్తుంది।',
-        ifr: 'వ్యక్తిగత అటవీ హక్కులు (IFR): 4 హెక్టార్ల వరకు వ్యవసాయ భూమికి వ్యక్తిగత హక్కులు. అవసరం: నివాస రుజువు, వ్యవసాయ పని రుజువు, సమాజిక మద్దతు.',
+        ifr: 'వ్యక్తిగత అటవీ హక్కులు (IFR): 4 హెక్టార్ల వరకు వ్యవసాయ భూమికి వ్యక్తిగత హక్కులు। అవసరం: నివాస రుజువు, వ్యవసాయ పని రుజువు, సమాజిక మద్దతు.',
         cfr: 'సమాజిక అటవీ వనరుల హక్కులు (CFR): అటవీ వనరుల రక్షణ, నిర్వహణ మరియు వినియోగానికి సమాజిక హక్కులు.',
         status: 'మీ దరఖాస్తు స్థితిని తనిఖీ చేయడానికి: 1) మీ దరఖాస్తు IDని ఇవ్వండి 2) Status Checker ఉపయోగించండి।',
         documents: 'అవసరమైన పత్రాలు: 1) ఆధార్ కార్డ్ 2) గిరిజన సర్టిఫికేట్ 3) నివాస రుజువు 4) భూమి స్వాధీన రుజువు.',
@@ -299,7 +307,7 @@ const ChatBot = () => {
                   <Languages className="h-3 w-3 mr-1" />
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-background border shadow-lg z-[60]">
                   <SelectItem value="hi">हिंदी</SelectItem>
                   <SelectItem value="en">English</SelectItem>
                   <SelectItem value="od">ଓଡ଼ିଆ</SelectItem>
@@ -307,8 +315,6 @@ const ChatBot = () => {
                   <SelectItem value="bn">বাংলা</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="flex items-center space-x-1">
               <Button
                 variant="ghost"
                 size="sm"
