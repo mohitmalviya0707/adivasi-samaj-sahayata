@@ -3,13 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Users, FileText, CheckCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import LanguageSelector from "@/components/LanguageSelector";
-import HeroSection from "@/components/HeroSection";
-import ApplicationForm from "@/components/ApplicationForm";
-import OfficerDashboard from "@/components/OfficerDashboard";
-import StatusChecker from "@/components/StatusChecker";
-import MapVisualization from "@/components/MapVisualization";
-import ChatBot from "@/components/ChatBot";
+import { LanguageSelector, HeroSection, ApplicationForm, OfficerDashboard, StatusChecker, MapVisualization, ChatBot } from "@/AllComponents";
 
 const Index = () => {
   const { t } = useLanguage();
