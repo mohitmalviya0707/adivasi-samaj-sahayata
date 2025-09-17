@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Progress } from "@/components/ui/progress";
+import InteractiveMap from "@/components/InteractiveMap";
 import { 
   FileText, 
   Upload, 
@@ -814,17 +815,7 @@ export const MapVisualization = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="relative h-96 bg-gradient-to-br from-green-100 via-green-50 to-blue-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <MapPin className="h-16 w-16 text-muted-foreground mx-auto" />
-                  <div>
-                    <h3 className="font-semibold text-lg">Interactive Map View</h3>
-                    <p className="text-muted-foreground">
-                      This would show an interactive map with approved land allocations
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <InteractiveMap selectedFilter={selectedFilter} />
             </CardContent>
           </Card>
         </div>
