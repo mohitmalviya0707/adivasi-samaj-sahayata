@@ -1,19 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { Card, CardContent } from './ui/card';
+import tribalLandsData from '../data/tribalLands.json';
 
 interface MapProps {
   selectedFilter?: string;
 }
 
 const InteractiveMap: React.FC<MapProps> = ({ selectedFilter = "all" }) => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxToken, setMapboxToken] = useState("");
-  const [tokenEntered, setTokenEntered] = useState(false);
+  const [isMapReady, setIsMapReady] = useState(false);
 
   // Sample FRA data points across India
   const fraData = [
@@ -29,119 +26,56 @@ const InteractiveMap: React.FC<MapProps> = ({ selectedFilter = "all" }) => {
     { id: 10, state: "Rajasthan", lat: 27.0238, lng: 74.2179, approved: 200, pending: 100, rejected: 40, district: "Udaipur" },
   ];
 
-  useEffect(() => {
-    if (!mapContainer.current || !tokenEntered || !mapboxToken) return;
+  // Fix Leaflet default markers
+  delete (L.Icon.Default.prototype as any)._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  });
 
-    // Initialize map
-    mapboxgl.accessToken = mapboxToken;
+  // Style functions for GeoJSON layers
+  const getFeatureStyle = (feature: any) => {
+    const properties = feature.properties;
     
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/light-v11',
-      center: [78.9629, 20.5937], // Center of India
-      zoom: 5,
-    });
+    if (properties.status === 'accepted') {
+      return { color: '#22c55e', fillColor: '#22c55e', fillOpacity: 0.3 };
+    } else if (properties.status === 'rejected') {
+      return { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.3 };
+    } else if (properties.level === 'high') {
+      return { color: '#3b82f6', fillColor: '#3b82f6', fillOpacity: 0.3 };
+    }
+    
+    return { color: '#6b7280', fillColor: '#6b7280', fillOpacity: 0.3 };
+  };
 
-    // Add navigation controls
-    map.current.addControl(
-      new mapboxgl.NavigationControl(),
-      'top-right'
-    );
-
-    // Add markers for each state/district
-    map.current.on('load', () => {
-      fraData.forEach((location) => {
-        const totalClaims = location.approved + location.pending + location.rejected;
-        const approvalRate = (location.approved / totalClaims * 100).toFixed(1);
-        
-        // Create marker color based on approval rate
-        let markerColor = '#ef4444'; // red for low approval
-        if (parseFloat(approvalRate) > 70) markerColor = '#22c55e'; // green for high approval
-        else if (parseFloat(approvalRate) > 50) markerColor = '#eab308'; // yellow for medium approval
-
-        // Create popup content
-        const popupContent = `
-          <div class="p-2">
-            <h3 class="font-bold text-lg">${location.state}</h3>
-            <p class="text-sm text-gray-600">${location.district} District</p>
-            <div class="mt-2 space-y-1">
-              <div class="flex justify-between">
-                <span class="text-green-600">Approved:</span>
-                <span class="font-semibold">${location.approved.toLocaleString()}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-yellow-600">Pending:</span>
-                <span class="font-semibold">${location.pending.toLocaleString()}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-red-600">Rejected:</span>
-                <span class="font-semibold">${location.rejected.toLocaleString()}</span>
-              </div>
-              <div class="border-t pt-1 mt-2">
-                <div class="flex justify-between">
-                  <span>Total Claims:</span>
-                  <span class="font-bold">${totalClaims.toLocaleString()}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>Approval Rate:</span>
-                  <span class="font-bold">${approvalRate}%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-
-        // Create marker
-        const marker = new mapboxgl.Marker({
-          color: markerColor,
-          scale: 0.8
-        })
-          .setLngLat([location.lng, location.lat])
-          .setPopup(new mapboxgl.Popup().setHTML(popupContent))
-          .addTo(map.current!);
-      });
-    });
-
-    // Cleanup
-    return () => {
-      map.current?.remove();
-    };
-  }, [tokenEntered, mapboxToken]);
-
-  const handleTokenSubmit = () => {
-    if (mapboxToken.trim()) {
-      setTokenEntered(true);
+  const onEachFeature = (feature: any, layer: any) => {
+    if (feature.properties) {
+      const properties = feature.properties;
+      let popupContent = `<div class="p-2"><h3 class="font-bold">${properties.name}</h3>`;
+      
+      if (properties.status) {
+        popupContent += `<p>Status: <span class="font-semibold">${properties.status}</span></p>`;
+      }
+      if (properties.level) {
+        popupContent += `<p>Water Level: <span class="font-semibold">${properties.level}</span></p>`;
+      }
+      
+      popupContent += `</div>`;
+      layer.bindPopup(popupContent);
     }
   };
 
-  if (!tokenEntered) {
+  useEffect(() => {
+    setIsMapReady(true);
+  }, []);
+
+  if (!isMapReady) {
     return (
       <Card>
         <CardContent className="p-6">
-          <div className="text-center space-y-4">
-            <h3 className="text-lg font-semibold">Enter Mapbox Token</h3>
-            <p className="text-sm text-muted-foreground">
-              To display the interactive map, please enter your Mapbox public token.
-              You can get one from{' '}
-              <a 
-                href="https://mapbox.com/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                mapbox.com
-              </a>
-            </p>
-            <div className="flex gap-2 max-w-md mx-auto">
-              <Input
-                type="text"
-                placeholder="pk.eyJ1IjoieW91ci11c2VybmFtZSI..."
-                value={mapboxToken}
-                onChange={(e) => setMapboxToken(e.target.value)}
-                className="flex-1"
-              />
-              <Button onClick={handleTokenSubmit}>Load Map</Button>
-            </div>
+          <div className="text-center">
+            <p>Loading map...</p>
           </div>
         </CardContent>
       </Card>
@@ -150,21 +84,85 @@ const InteractiveMap: React.FC<MapProps> = ({ selectedFilter = "all" }) => {
 
   return (
     <div className="relative w-full h-96 rounded-lg overflow-hidden">
-      <div ref={mapContainer} className="absolute inset-0" />
+      <MapContainer
+        center={[23.5, 80]}
+        zoom={5}
+        style={{ height: "100%", width: "100%" }}
+        className="rounded-lg"
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="© OpenStreetMap contributors"
+        />
+        
+        {/* GeoJSON tribal lands and water zones */}
+        <GeoJSON
+          data={tribalLandsData as any}
+          style={getFeatureStyle}
+          onEachFeature={onEachFeature}
+        />
+        
+        {/* FRA data markers */}
+        {fraData.map((location) => {
+          const totalClaims = location.approved + location.pending + location.rejected;
+          const approvalRate = (location.approved / totalClaims * 100).toFixed(1);
+          
+          return (
+            <Marker key={location.id} position={[location.lat, location.lng]}>
+              <Popup>
+                <div className="p-2">
+                  <h3 className="font-bold text-lg">{location.state}</h3>
+                  <p className="text-sm text-gray-600">{location.district} District</p>
+                  <div className="mt-2 space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-green-600">Approved:</span>
+                      <span className="font-semibold">{location.approved.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-yellow-600">Pending:</span>
+                      <span className="font-semibold">{location.pending.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-red-600">Rejected:</span>
+                      <span className="font-semibold">{location.rejected.toLocaleString()}</span>
+                    </div>
+                    <div className="border-t pt-1 mt-2">
+                      <div className="flex justify-between">
+                        <span>Total Claims:</span>
+                        <span className="font-bold">{totalClaims.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Approval Rate:</span>
+                        <span className="font-bold">{approvalRate}%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          );
+        })}
+      </MapContainer>
+      
+      {/* Legend */}
       <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
-        <h4 className="font-semibold text-sm mb-2">Forest Rights Act Claims</h4>
+        <h4 className="font-semibold text-sm mb-2">Legend</h4>
         <div className="space-y-1 text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span>High Approval (&gt;70%)</span>
+            <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
+            <span>Accepted Tribal Lands</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <span>Medium Approval (50-70%)</span>
+            <div className="w-3 h-3 bg-red-500 rounded-sm"></div>
+            <span>Rejected Tribal Lands</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <span>Low Approval (&lt;50%)</span>
+            <div className="w-3 h-3 bg-blue-500 rounded-sm"></div>
+            <span>Water Level Zones</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            <span>FRA Data Points</span>
           </div>
         </div>
       </div>

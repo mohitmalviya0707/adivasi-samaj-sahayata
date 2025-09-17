@@ -1,0 +1,62 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tribal Land A",
+        "status": "accepted"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [80.10, 23.50],
+            [80.20, 23.50],
+            [80.20, 23.60],
+            [80.10, 23.60],
+            [80.10, 23.50]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tribal Land B",
+        "status": "rejected"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [80.30, 23.40],
+            [80.40, 23.40],
+            [80.40, 23.50],
+            [80.30, 23.50],
+            [80.30, 23.40]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Water Level Zone",
+        "level": "high"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [80.15, 23.30],
+            [80.25, 23.30],
+            [80.25, 23.40],
+            [80.15, 23.40],
+            [80.15, 23.30]
+          ]
+        ]
+      }
+    }
+  ]
+}
