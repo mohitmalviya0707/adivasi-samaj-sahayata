@@ -815,7 +815,7 @@ export const MapVisualization = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <InteractiveMap selectedFilter={selectedFilter} />
+              <InteractiveMap />
             </CardContent>
           </Card>
         </div>
