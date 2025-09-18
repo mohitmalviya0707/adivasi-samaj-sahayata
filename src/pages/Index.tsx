@@ -47,41 +47,48 @@ const Index = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-government-orange to-government-green flex items-center justify-center">
-              <Users className="h-6 w-6 text-white" />
+          <div className="flex items-center space-x-2 md:space-x-4">
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-government-orange to-government-green flex items-center justify-center">
+              <Users className="h-4 w-4 md:h-6 md:w-6 text-white" />
             </div>
-            <div>
-              <h1 className="font-bold text-lg">{t('header.title')}</h1>
-              <p className="text-xs text-muted-foreground">{t('header.subtitle')}</p>
+            <div className="hidden sm:block">
+              <h1 className="font-bold text-sm md:text-lg">{t('header.title')}</h1>
+              <p className="text-xs text-muted-foreground hidden md:block">{t('header.subtitle')}</p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <LanguageSelector />
           
             {userType && (
-              <div className="flex items-center space-x-6">
-                <nav className="flex items-center space-x-6">
-                  {navItems.map((item) => (
-                    <Button
-                      key={item.id}
-                      variant={activeSection === item.id ? "default" : "ghost"}
-                      onClick={() => setActiveSection(item.id)}
-                      className="flex items-center space-x-2"
-                    >
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.label}</span>
-                    </Button>
-                  ))}
-                </nav>
-                <Badge variant="secondary" className="bg-government-green text-white">
-                  {userType === "citizen" ? t('header.citizen') : t('header.officer')}
-                </Badge>
-              </div>
+              <Badge variant="secondary" className="bg-government-green text-white text-xs">
+                {userType === "citizen" ? t('header.citizen') : t('header.officer')}
+              </Badge>
             )}
           </div>
         </div>
+        
+        {/* Mobile Navigation */}
+        {userType && (
+          <div className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="container">
+              <nav className="flex items-center justify-around py-2">
+                {navItems.map((item) => (
+                  <Button
+                    key={item.id}
+                    variant={activeSection === item.id ? "default" : "ghost"}
+                    onClick={() => setActiveSection(item.id)}
+                    className="flex flex-col items-center space-y-1 h-auto p-2 text-xs"
+                    size="sm"
+                  >
+                    <item.icon className="h-4 w-4" />
+                    <span className="hidden sm:inline">{item.label}</span>
+                  </Button>
+                ))}
+              </nav>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Main Content */}
