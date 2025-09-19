@@ -325,17 +325,17 @@ export const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
   return (
     <div className="space-y-12">
       <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-government-blue via-government-orange to-government-green p-12 text-white">
-        <div className="relative z-10 max-w-4xl">
+        <div className="relative z-10 max-w-6xl">
           <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">
-            {t('hero.badge')}
+            Forest Rights Act 2006 - Digital Platform
           </Badge>
-          <h1 className="mb-6 text-5xl font-bold leading-tight">
-            {t('hero.title_part1')}
+          <h1 className="mb-6 text-4xl md:text-5xl font-bold leading-tight">
+            Empowering Officers, Administrators
             <br />
-            <span className="text-yellow-200">{t('hero.title_part2')}</span>
+            <span className="text-yellow-200">& Tribal Communities</span>
           </h1>
-          <p className="mb-8 text-xl opacity-90 max-w-2xl">
-            {t('hero.description')}
+          <p className="mb-8 text-lg md:text-xl opacity-90 max-w-4xl">
+            Designed for government officers, administrators, and tribal representatives — making FRA implementation transparent, data-driven, and efficient.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button 
@@ -359,6 +359,107 @@ export const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
         </div>
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10"></div>
         <div className="absolute -bottom-10 -left-10 h-60 w-60 rounded-full bg-white/5"></div>
+      </section>
+
+      <section>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">Comprehensive FRA Management Features</h2>
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+            A complete digital ecosystem for efficient Forest Rights Act implementation with real-time analytics and streamlined workflows.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-government-orange">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Layers className="h-6 w-6 text-government-orange" />
+                <span>Interactive Map Layers</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Instantly view land parcels with status filters – Approved, Pending, and Rejected. Real-time visualization of FRA claims.
+              </p>
+              <Badge variant="secondary">Land Visualization</Badge>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-government-green">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Users className="h-6 w-6 text-government-green" />
+                <span>Comprehensive Dashboard</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Track monthly claim processing, geographic coverage, and officer efficiency with clear visual charts.
+              </p>
+              <Badge variant="secondary">Analytics & Insights</Badge>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-government-blue">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <TreePine className="h-6 w-6 text-government-blue" />
+                <span>Community Insights</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Understand distribution of Gond, Baiga, Muria, Cork and other tribes through intuitive visuals.
+              </p>
+              <Badge variant="secondary">Tribal Analytics</Badge>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-500">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <FileCheck className="h-6 w-6 text-purple-500" />
+                <span>Decision Support</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Streamlined workflow diagrams help officers validate claims, manage documents, and improve turnaround time.
+              </p>
+              <Badge variant="secondary">Workflow Optimization</Badge>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-indigo-500">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Zap className="h-6 w-6 text-indigo-500" />
+                <span>Scalable Architecture</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Works as a standalone web app or can integrate with existing FRA systems for real-time analytics.
+              </p>
+              <Badge variant="secondary">Enterprise Ready</Badge>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-emerald-500">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <MapPin className="h-6 w-6 text-emerald-500" />
+                <span>{t('services.land_rights')}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                {t('services.land_rights_desc')}
+              </p>
+              <Badge variant="secondary">Forest Rights Act</Badge>
+            </CardContent>
+          </Card>
+        </div>
       </section>
 
       <section>
