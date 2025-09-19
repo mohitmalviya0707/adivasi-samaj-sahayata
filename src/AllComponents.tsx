@@ -325,17 +325,17 @@ export const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
   return (
     <div className="space-y-12">
       <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-government-blue via-government-orange to-government-green p-12 text-white">
-        <div className="relative z-10 max-w-6xl">
+        <div className="relative z-10 max-w-4xl">
           <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">
-            Forest Rights Act 2006 - Digital Platform
+            {t('hero.badge')}
           </Badge>
-          <h1 className="mb-6 text-4xl md:text-5xl font-bold leading-tight">
-            Empowering Officers, Administrators
+          <h1 className="mb-6 text-5xl font-bold leading-tight">
+            {t('hero.title_part1')}
             <br />
-            <span className="text-yellow-200">& Tribal Communities</span>
+            <span className="text-yellow-200">{t('hero.title_part2')}</span>
           </h1>
-          <p className="mb-8 text-lg md:text-xl opacity-90 max-w-4xl">
-            Designed for government officers, administrators, and tribal representatives — making FRA implementation transparent, data-driven, and efficient.
+          <p className="mb-8 text-xl opacity-90 max-w-2xl">
+            {t('hero.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button 
@@ -363,9 +363,9 @@ export const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
 
       <section>
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Comprehensive FRA Management Features</h2>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            A complete digital ecosystem for efficient Forest Rights Act implementation with real-time analytics and streamlined workflows.
+          <h2 className="text-3xl font-bold mb-4">{t('services.title')}</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Designed for government officers, administrators, and tribal representatives — making FRA implementation transparent, data-driven, and efficient.
           </p>
         </div>
         
@@ -379,7 +379,7 @@ export const HeroSection = ({ onUserTypeSelect }: HeroSectionProps) => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Instantly view land parcels with status filters – Approved, Pending, and Rejected. Real-time visualization of FRA claims.
+                Instantly view land parcels with status filters – Approved, Pending, and Rejected.
               </p>
               <Badge variant="secondary">Land Visualization</Badge>
             </CardContent>
