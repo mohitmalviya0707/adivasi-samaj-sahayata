@@ -552,7 +552,7 @@ export const LanguageSelector = () => {
     { code: 'od' as Language, name: 'ଓଡ଼ିଆ', flag: '🇮🇳' },
     { code: 'te' as Language, name: 'తెలుగు', flag: '🇮🇳' },
     { code: 'bn' as Language, name: 'বাংলা', flag: '🇮🇳' },
-    { code: 'bn' as Language, name: 'বাংলা', flag: '🇮🇳' }, { code: 'ta' as Language, name: 'தமிழ்', flag: '🇮🇳' }, { code: 'ml' as Language, name: 'മലയാളം', flag: '🇮🇳' }, { code: 'kn' as Language, name: 'ಕನ್ನಡ', flag: '🇮🇳' }, { code: 'gu' as Language, name: 'ગુજરાતી', flag: '🇮🇳' }, { code: 'mr' as Language, name: 'मराठी', flag: '🇮🇳' }, { code: 'pa' as Language, name: 'ਪੰਜਾਬੀ', flag: '🇮🇳' }, { code: 'as' as Language, name: 'অসমীয়া', flag: '🇮🇳' },
+    { code: 'ta' as Language, name: 'தமிழ்', flag: '🇮🇳' }, { code: 'ml' as Language, name: 'മലയാളം', flag: '🇮🇳' }, { code: 'kn' as Language, name: 'ಕನ್ನಡ', flag: '🇮🇳' }, { code: 'gu' as Language, name: 'ગુજરાતી', flag: '🇮🇳' }, { code: 'mr' as Language, name: 'मराठी', flag: '🇮🇳' }, { code: 'pa' as Language, name: 'ਪੰਜਾਬੀ', flag: '🇮🇳' }, { code: 'as' as Language, name: 'অসমীয়া', flag: '🇮🇳' },
     
   ];
 
