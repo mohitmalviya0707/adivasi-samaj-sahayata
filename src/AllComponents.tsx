@@ -55,32 +55,36 @@ export const ApplicationForm = () => {
   const [selectedSchemes, setSelectedSchemes] = useState<string[]>([]);
   const [currentStep, setCurrentStep] = useState(1);
 
-  const schemes = [
-    {
-      id: "pm_kisan",
-      name: "PM Kisan Yojana",
-      description: "₹6,000 annual financial benefit to farmers",
-      benefits: "Direct bank transfer",
-    },
-    {
-      id: "jal_jeevan",
-      name: "Jal Jeevan Mission", 
-      description: "Piped water supply to every household",
-      benefits: "Clean water connection",
-    },
-    {
-      id: "forest_rights",
-      name: "Forest Rights Act 2006",
-      description: "Individual/Community Forest Rights for land ownership under FRA 2006",
-      benefits: "Land pattas, forest land titles, community forest rights",
-    },
-    {
-      id: "scholarship",
-      name: "Tribal Scholarship",
-      description: "Educational support for tribal students",
-      benefits: "Financial assistance",
-    },
-  ];
+ const schemes = [
+  {
+    id: "pm_kisan",
+    name: "PM Kisan Yojana",
+    description: "₹6,000 annual financial benefit to farmers",
+    benefits: "Direct bank transfer",
+    link: "https://pmkisan.gov.in"
+  },
+  {
+    id: "jal_jeevan",
+    name: "Jal Jeevan Mission",
+    description: "Piped water supply to every household",
+    benefits: "Clean water connection",
+    link: "https://jaljeevanmission.gov.in"
+  },
+  {
+    id: "forest_rights",
+    name: "Forest Rights Act 2006",
+    description: "Individual/Community Forest Rights for land ownership under FRA 2006",
+    benefits: "Land pattas, forest land titles, community forest rights",
+    link: "https://tribal.nic.in/FRA.html"
+  },
+  {
+    id: "scholarship",
+    name: "Tribal Scholarship",
+    description: "Educational support for tribal students",
+    benefits: "Financial assistance",
+    link: "https://scholarships.gov.in"
+  }
+];
 
   const handleSchemeToggle = (schemeId: string) => {
     setSelectedSchemes(prev => 
