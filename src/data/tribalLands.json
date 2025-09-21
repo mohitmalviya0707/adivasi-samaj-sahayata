@@ -5,7 +5,12 @@
       "type": "Feature",
       "properties": {
         "name": "Tribal Land A",
-        "status": "accepted"
+        "status": "approved",
+        "forest_boundary": true,
+        "available_for_fra": false,
+        "allocated_to": "Ravi Kumar",
+        "allocated_area": 5.2,
+        "allocation_date": "2025-06-10"
       },
       "geometry": {
         "type": "Polygon",
@@ -24,7 +29,12 @@
       "type": "Feature",
       "properties": {
         "name": "Tribal Land B",
-        "status": "rejected"
+        "status": "rejected",
+        "forest_boundary": false,
+        "available_for_fra": false,
+        "allocated_to": null,
+        "allocated_area": 0,
+        "allocation_date": null
       },
       "geometry": {
         "type": "Polygon",
@@ -42,8 +52,37 @@
     {
       "type": "Feature",
       "properties": {
+        "name": "Land Available for FRA",
+        "status": "pending",
+        "forest_boundary": false,
+        "available_for_fra": true,
+        "allocated_to": null,
+        "allocated_area": 0,
+        "allocation_date": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [80.20, 23.20],
+            [80.30, 23.20],
+            [80.30, 23.30],
+            [80.20, 23.30],
+            [80.20, 23.20]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "name": "Water Level Zone",
-        "level": "high"
+        "level": "high",
+        "forest_boundary": false,
+        "available_for_fra": false,
+        "allocated_to": null,
+        "allocated_area": 0,
+        "allocation_date": null
       },
       "geometry": {
         "type": "Polygon",
@@ -60,3 +99,4 @@
     }
   ]
 }
+
