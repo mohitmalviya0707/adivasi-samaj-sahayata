@@ -99,48 +99,83 @@ export const ApplicationForm = () => {
       case 1:
         return (
           <div className="space-y-6">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold mb-2">Personal Information</h3>
-              <p className="text-muted-foreground">Please provide your basic details</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name *</Label>
-                <Input id="fullName" placeholder="Enter your full name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="aadhar">Aadhar Number *</Label>
-                <Input id="aadhar" placeholder="xxxx-xxxx-xxxx" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="mobile">Mobile Number *</Label>
-                <Input id="mobile" placeholder="+91-xxxxxxxxxx" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" placeholder="your.email@example.com" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="dob">Date of Birth *</Label>
-                <Input id="dob" type="date" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="gender">Gender *</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select gender" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="male">Male</SelectItem>
-                    <SelectItem value="female">Female</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-        );
+  <div className="text-center">
+    <h3 className="text-2xl font-bold mb-2">Personal Information</h3>
+    <p className="text-muted-foreground">Please provide your basic details</p>
+  </div>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {/* Full Name */}
+    <div className="space-y-2">
+      <Label htmlFor="fullName">Full Name *</Label>
+      <Input
+        id="fullName"
+        placeholder="Enter your full name"
+        required
+      />
+    </div>
+
+    {/* Aadhar */}
+    <div className="space-y-2">
+      <Label htmlFor="aadhar">Aadhar Number *</Label>
+      <Input
+        id="aadhar"
+        placeholder="xxxx-xxxx-xxxx"
+        pattern="^\d{12}$"
+        maxLength={12}
+        title="Enter a 12 digit Aadhar number"
+        required
+      />
+    </div>
+
+    {/* Mobile */}
+    <div className="space-y-2">
+      <Label htmlFor="mobile">Mobile Number *</Label>
+      <Input
+        id="mobile"
+        placeholder="10 digit mobile number"
+        pattern="^[6-9]\d{9}$"
+        maxLength={10}
+        title="Enter a valid 10 digit mobile number"
+        required
+      />
+    </div>
+
+    {/* Email */}
+    <div className="space-y-2">
+      <Label htmlFor="email">Email Address</Label>
+      <Input
+        id="email"
+        type="email"
+        placeholder="your.email@example.com"
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        title="Enter a valid email address"
+      />
+    </div>
+
+    {/* DOB */}
+    <div className="space-y-2">
+      <Label htmlFor="dob">Date of Birth *</Label>
+      <Input id="dob" type="date" required />
+    </div>
+
+    {/* Gender */}
+    <div className="space-y-2">
+      <Label htmlFor="gender">Gender *</Label>
+      <Select required>
+        <SelectTrigger>
+          <SelectValue placeholder="Select gender" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="male">Male</SelectItem>
+          <SelectItem value="female">Female</SelectItem>
+          <SelectItem value="other">Other</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+  </div>
+</div>
+
 
       case 2:
         return (
