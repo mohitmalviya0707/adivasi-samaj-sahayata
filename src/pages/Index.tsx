@@ -19,7 +19,7 @@ const Index = () => {
   const [userType, setUserType] = useState<"citizen" | "officer" | null>(null);
 
   const renderSection = () => {
-    if (!userType) {
+    if (!userType || activeSection === "home") {
       return <HeroSection onUserTypeSelect={setUserType} />;
     }
 
@@ -55,17 +55,15 @@ const Index = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          
           {/* Left Side: Home Button + Logo */}
           <div className="flex items-center space-x-2 md:space-x-4">
-            
             {/* Home Button */}
             {userType && (
               <Button
                 variant="ghost"
                 onClick={() => {
-                  setActiveSection(userType === "officer" ? "dashboard" : "home");
-                  if (userType === "citizen") setUserType(null);
+                  setActiveSection("home"); // hamesha home
+                  setUserType(null); // officer ya citizen dono reset
                 }}
                 className="flex items-center space-x-1 text-sm md:text-base"
               >
@@ -170,3 +168,4 @@ const Index = () => {
 };
 
 export default Index;
+
