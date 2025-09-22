@@ -56,172 +56,73 @@ export const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
  const schemes = [
-  {
-    id: "pm_kisan",
-    name: "PM Kisan Yojana",
-    description: "₹6,000 annual financial benefit to farmers",
-    benefits: "Direct bank transfer",
-    link: "https://pmkisan.gov.in"
-  },
-  {
-    id: "jal_jeevan",
-    name: "Jal Jeevan Mission",
-    description: "Piped water supply to every household",
-    benefits: "Clean water connection",
-    link: "https://jaljeevanmission.gov.in"
-  },
-  {
-    id: "forest_rights",
-    name: "Forest Rights Act 2006",
-    description: "Individual/Community Forest Rights for land ownership under FRA 2006",
-    benefits: "Land pattas, forest land titles, community forest rights",
-    link: "https://tribal.nic.in/FRA.html"
-  },
-  {
-    id: "scholarship",
-    name: "Tribal Scholarship",
-    description: "Educational support for tribal students",
-    benefits: "Financial assistance",
-    link: "https://scholarships.gov.in"
-  }
-];
-
-  const handleSchemeToggle = (schemeId: string) => {
-    setSelectedSchemes(prev => 
-      prev.includes(schemeId) 
-        ? prev.filter(id => id !== schemeId)
-        : [...prev, schemeId]
-    );
-  };
-
-  const handleSubmit = () => {
-    toast.success("Application submitted successfully! Reference ID: TB" + Date.now().toString().slice(-6));
-  };
-
-  const renderStep = () => {
-    switch (currentStep) {
-      case 1:
+   case 1:
         return (
           <div className="space-y-6">
-  <div className="text-center">
-    <h3 className="text-2xl font-bold mb-2">Personal Information</h3>
-    <p className="text-muted-foreground">Please provide your basic details</p>
-  </div>
-
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    {/* Full Name */}
-    <div className="space-y-2">
-      <Label htmlFor="fullName">Full Name *</Label>
-      <Input
-        id="fullName"
-        placeholder="Enter your full name"
-        required
-      />
-    </div>
-
-    {/* Aadhar */}
-    <div className="space-y-2">
-      <Label htmlFor="aadhar">Aadhar Number *</Label>
-      <Input
-        id="aadhar"
-        placeholder="xxxx-xxxx-xxxx"
-        pattern="^\d{12}$"
-        maxLength={12}
-        title="Enter a 12 digit Aadhar number"
-        required
-      />
-    </div>
-
-    {/* Mobile */}
-    <div className="space-y-2">
-      <Label htmlFor="mobile">Mobile Number *</Label>
-      <Input
-        id="mobile"
-        placeholder="10 digit mobile number"
-        pattern="^[6-9]\d{9}$"
-        maxLength={10}
-        title="Enter a valid 10 digit mobile number"
-        required
-      />
-    </div>
-
-    {/* Email */}
-    <div className="space-y-2">
-      <Label htmlFor="email">Email Address</Label>
-      <Input
-        id="email"
-        type="email"
-        placeholder="your.email@example.com"
-        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-        title="Enter a valid email address"
-      />
-    </div>
-
-    {/* DOB */}
-    <div className="space-y-2">
-      <Label htmlFor="dob">Date of Birth *</Label>
-      <Input id="dob" type="date" required />
-    </div>
-
-    {/* Gender */}
-    <div className="space-y-2">
-      <Label htmlFor="gender">Gender *</Label>
-      <Select required>
-        <SelectTrigger>
-          <SelectValue placeholder="Select gender" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="male">Male</SelectItem>
-          <SelectItem value="female">Female</SelectItem>
-          <SelectItem value="other">Other</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-  </div>
-</div>
-
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Label htmlFor="fullName">Full Name *</Label>
+                <Input id="fullName" placeholder="Enter full name" required />
+              </div>
+              <div>
+                <Label htmlFor="aadhar">Aadhar Number *</Label>
+                <Input id="aadhar" placeholder="xxxx-xxxx-xxxx" maxLength={12} pattern="^\d{12}$" required />
+              </div>
+              <div>
+                <Label htmlFor="mobile">Mobile Number *</Label>
+                <Input id="mobile" placeholder="10 digit mobile" maxLength={10} pattern="^[6-9]\d{9}$" required />
+              </div>
+              <div>
+                <Label htmlFor="email">Email Address</Label>
+                <Input id="email" type="email" placeholder="email@example.com" />
+              </div>
+              <div>
+                <Label htmlFor="dob">Date of Birth *</Label>
+                <Input id="dob" type="date" required />
+              </div>
+              <div>
+                <Label htmlFor="gender">Gender *</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select gender" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="male">Male</SelectItem>
+                    <SelectItem value="female">Female</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+        );
       case 2:
         return (
           <div className="space-y-6">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold mb-2">Location Details</h3>
-              <p className="text-muted-foreground">Select your administrative location</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="state">State *</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="madhya_pradesh">Madhya Pradesh</SelectItem>
-                    <SelectItem value="odisha">Odisha</SelectItem>
-                    <SelectItem value="telangana">Telangana</SelectItem>
-                    <SelectItem value="tripura">Tripura</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="district">District *</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select district" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="district1">District 1</SelectItem>
-                    <SelectItem value="district2">District 2</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="address">Complete Address *</Label>
-              <Textarea id="address" placeholder="Enter your complete postal address" />
-            </div>
+            <Label htmlFor="state">State *</Label>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Select state" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="madhya_pradesh">Madhya Pradesh</SelectItem>
+                <SelectItem value="odisha">Odisha</SelectItem>
+                <SelectItem value="telangana">Telangana</SelectItem>
+                <SelectItem value="tripura">Tripura</SelectItem>
+              </SelectContent>
+            </Select>
+            <Label htmlFor="district">District *</Label>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Select district" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="district1">District 1</SelectItem>
+                <SelectItem value="district2">District 2</SelectItem>
+              </SelectContent>
+            </Select>
+            <Label htmlFor="address">Complete Address *</Label>
+            <Textarea id="address" placeholder="Enter complete address" />
           </div>
         );
 
