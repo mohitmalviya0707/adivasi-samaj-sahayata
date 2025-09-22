@@ -55,77 +55,86 @@ export const ApplicationForm = () => {
   const [selectedSchemes, setSelectedSchemes] = useState<string[]>([]);
   const [currentStep, setCurrentStep] = useState(1);
 
- const schemes = [
-   case 1:
-        return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="fullName">Full Name *</Label>
-                <Input id="fullName" placeholder="Enter full name" required />
-              </div>
-              <div>
-                <Label htmlFor="aadhar">Aadhar Number *</Label>
-                <Input id="aadhar" placeholder="xxxx-xxxx-xxxx" maxLength={12} pattern="^\d{12}$" required />
-              </div>
-              <div>
-                <Label htmlFor="mobile">Mobile Number *</Label>
-                <Input id="mobile" placeholder="10 digit mobile" maxLength={10} pattern="^[6-9]\d{9}$" required />
-              </div>
-              <div>
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" placeholder="email@example.com" />
-              </div>
-              <div>
-                <Label htmlFor="dob">Date of Birth *</Label>
-                <Input id="dob" type="date" required />
-              </div>
-              <div>
-                <Label htmlFor="gender">Gender *</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select gender" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="male">Male</SelectItem>
-                    <SelectItem value="female">Female</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+const renderStep = () => {
+  switch (currentStep) {
+    case 1:
+      return (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <Label htmlFor="fullName">Full Name *</Label>
+              <Input id="fullName" placeholder="Enter full name" required />
+            </div>
+            <div>
+              <Label htmlFor="aadhar">Aadhar Number *</Label>
+              <Input id="aadhar" placeholder="xxxx-xxxx-xxxx" maxLength={12} pattern="^\d{12}$" required />
+            </div>
+            <div>
+              <Label htmlFor="mobile">Mobile Number *</Label>
+              <Input id="mobile" placeholder="10 digit mobile" maxLength={10} pattern="^[6-9]\d{9}$" required />
+            </div>
+            <div>
+              <Label htmlFor="email">Email Address</Label>
+              <Input id="email" type="email" placeholder="email@example.com" />
+            </div>
+            <div>
+              <Label htmlFor="dob">Date of Birth *</Label>
+              <Input id="dob" type="date" required />
+            </div>
+            <div>
+              <Label htmlFor="gender">Gender *</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
-        );
-      case 2:
-        return (
-          <div className="space-y-6">
-            <Label htmlFor="state">State *</Label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Select state" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="madhya_pradesh">Madhya Pradesh</SelectItem>
-                <SelectItem value="odisha">Odisha</SelectItem>
-                <SelectItem value="telangana">Telangana</SelectItem>
-                <SelectItem value="tripura">Tripura</SelectItem>
-              </SelectContent>
-            </Select>
-            <Label htmlFor="district">District *</Label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Select district" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="district1">District 1</SelectItem>
-                <SelectItem value="district2">District 2</SelectItem>
-              </SelectContent>
-            </Select>
-            <Label htmlFor="address">Complete Address *</Label>
-            <Textarea id="address" placeholder="Enter complete address" />
-          </div>
-        );
+        </div>
+      );
 
+    case 2:
+      return (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <Label htmlFor="state">State *</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select state" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="madhya_pradesh">Madhya Pradesh</SelectItem>
+                  <SelectItem value="odisha">Odisha</SelectItem>
+                  <SelectItem value="telangana">Telangana</SelectItem>
+                  <SelectItem value="tripura">Tripura</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="district">District *</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select district" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="district1">District 1</SelectItem>
+                  <SelectItem value="district2">District 2</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="md:col-span-2">
+              <Label htmlFor="address">Complete Address *</Label>
+              <Textarea id="address" placeholder="Enter complete address" required />
+            </div>
+          </div>
+        </div>
+      );
       case 3:
         return (
           <div className="space-y-6">
