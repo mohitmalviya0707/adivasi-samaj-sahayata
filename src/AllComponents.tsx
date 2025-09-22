@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,134 +7,110 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Progress } from "@/components/ui/progress";
-import InteractiveMap from "@/components/InteractiveMap";
-import { 
-  FileText, 
-  Upload, 
-  MapPin, 
-  User, 
-  Phone, 
-  Mail, 
-  Calendar, 
-  Home,
-  MessageSquare, 
-  Send, 
-  Bot, 
-  X, 
-  Minimize2,
-  Languages,
-  Users, 
-  Shield, 
-  Zap, 
-  CheckCircle,
-  Clock, 
-  XCircle, 
-  AlertTriangle,
-  Search,
-  Filter,
-  Eye,
-  FileCheck,
-  FileX,
-  AlertCircle,
-  Download,
-  Layers,
-  TreePine,
-  Droplets,
-  Wheat,
-  ZoomIn,
-  ZoomOut,
-  RotateCcw
-} from "lucide-react";
-import { toast } from "sonner";
-import { useLanguage, Language } from "@/contexts/LanguageContext";
+import { FileText, Upload } from "lucide-react";
 
-// ApplicationForm Component
 export const ApplicationForm = () => {
-  const [selectedSchemes, setSelectedSchemes] = useState<string[]>([]);
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedSchemes, setSelectedSchemes] = useState<string[]>([]);
 
-const renderStep = () => {
-  switch (currentStep) {
-    case 1:
-      return (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <Label htmlFor="fullName">Full Name *</Label>
-              <Input id="fullName" placeholder="Enter full name" required />
-            </div>
-            <div>
-              <Label htmlFor="aadhar">Aadhar Number *</Label>
-              <Input id="aadhar" placeholder="xxxx-xxxx-xxxx" maxLength={12} pattern="^\d{12}$" required />
-            </div>
-            <div>
-              <Label htmlFor="mobile">Mobile Number *</Label>
-              <Input id="mobile" placeholder="10 digit mobile" maxLength={10} pattern="^[6-9]\d{9}$" required />
-            </div>
-            <div>
-              <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="email@example.com" />
-            </div>
-            <div>
-              <Label htmlFor="dob">Date of Birth *</Label>
-              <Input id="dob" type="date" required />
-            </div>
-            <div>
-              <Label htmlFor="gender">Gender *</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+  const schemes = [
+    { id: "scheme1", name: "Scheme 1", description: "For financial aid", benefits: "₹10,000" },
+    { id: "scheme2", name: "Scheme 2", description: "For education support", benefits: "Scholarship" },
+    { id: "scheme3", name: "Scheme 3", description: "Healthcare benefit", benefits: "Free checkup" },
+  ];
+
+  const handleSchemeToggle = (id: string) => {
+    setSelectedSchemes((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+    );
+  };
+
+  const handleSubmit = () => {
+    alert("Application submitted successfully!");
+    // Aap yahan form data ko API ya backend me send kar sakte hain
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Label htmlFor="fullName">Full Name *</Label>
+                <Input id="fullName" placeholder="Enter full name" required />
+              </div>
+              <div>
+                <Label htmlFor="aadhar">Aadhar Number *</Label>
+                <Input id="aadhar" placeholder="xxxx-xxxx-xxxx" maxLength={12} pattern="\d{12}" required />
+              </div>
+              <div>
+                <Label htmlFor="mobile">Mobile Number *</Label>
+                <Input id="mobile" placeholder="10 digit mobile" maxLength={10} pattern="[6-9]\d{9}" required />
+              </div>
+              <div>
+                <Label htmlFor="email">Email Address</Label>
+                <Input id="email" type="email" placeholder="email@example.com" />
+              </div>
+              <div>
+                <Label htmlFor="dob">Date of Birth *</Label>
+                <Input id="dob" type="date" required />
+              </div>
+              <div>
+                <Label htmlFor="gender">Gender *</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select gender" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="male">Male</SelectItem>
+                    <SelectItem value="female">Female</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
-        </div>
-      );
+        );
 
-    case 2:
-      return (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <Label htmlFor="state">State *</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select state" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="madhya_pradesh">Madhya Pradesh</SelectItem>
-                  <SelectItem value="odisha">Odisha</SelectItem>
-                  <SelectItem value="telangana">Telangana</SelectItem>
-                  <SelectItem value="tripura">Tripura</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="district">District *</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select district" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="district1">District 1</SelectItem>
-                  <SelectItem value="district2">District 2</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="md:col-span-2">
-              <Label htmlFor="address">Complete Address *</Label>
-              <Textarea id="address" placeholder="Enter complete address" required />
+      case 2:
+        return (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Label htmlFor="state">State *</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select state" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="madhya_pradesh">Madhya Pradesh</SelectItem>
+                    <SelectItem value="odisha">Odisha</SelectItem>
+                    <SelectItem value="telangana">Telangana</SelectItem>
+                    <SelectItem value="tripura">Tripura</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="district">District *</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select district" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="district1">District 1</SelectItem>
+                    <SelectItem value="district2">District 2</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="md:col-span-2">
+                <Label htmlFor="address">Complete Address *</Label>
+                <Textarea id="address" placeholder="Enter complete address" required />
+              </div>
             </div>
           </div>
-        </div>
-      );
+        );
+
       case 3:
         return (
           <div className="space-y-6">
@@ -142,21 +118,20 @@ const renderStep = () => {
               <h3 className="text-2xl font-bold mb-2">Select Government Schemes</h3>
               <p className="text-muted-foreground">Choose the benefits you want to apply for</p>
             </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {schemes.map((scheme) => (
-                <Card 
+                <Card
                   key={scheme.id}
                   className={`cursor-pointer transition-all duration-300 ${
-                    selectedSchemes.includes(scheme.id) 
-                      ? 'border-primary shadow-lg bg-primary/5' 
-                      : 'hover:shadow-md'
+                    selectedSchemes.includes(scheme.id)
+                      ? "border-primary shadow-lg bg-primary/5"
+                      : "hover:shadow-md"
                   }`}
                   onClick={() => handleSchemeToggle(scheme.id)}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-start space-x-3">
-                      <Checkbox 
+                      <Checkbox
                         checked={selectedSchemes.includes(scheme.id)}
                         onChange={() => handleSchemeToggle(scheme.id)}
                       />
@@ -180,25 +155,20 @@ const renderStep = () => {
               <h3 className="text-2xl font-bold mb-2">Upload Documents</h3>
               <p className="text-muted-foreground">Please upload required documents</p>
             </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
-                <CardContent className="p-6">
-                  <div className="text-center">
-                    <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h4 className="font-semibold mb-2">Aadhar Card</h4>
-                    <Button variant="outline" size="sm">Choose File</Button>
-                  </div>
+                <CardContent className="p-6 text-center">
+                  <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h4 className="font-semibold mb-2">Aadhar Card</h4>
+                  <Button variant="outline" size="sm">Choose File</Button>
                 </CardContent>
               </Card>
 
               <Card>
-                <CardContent className="p-6">
-                  <div className="text-center">
-                    <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h4 className="font-semibold mb-2">Tribal Certificate</h4>
-                    <Button variant="outline" size="sm">Choose File</Button>
-                  </div>
+                <CardContent className="p-6 text-center">
+                  <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h4 className="font-semibold mb-2">Tribal Certificate</h4>
+                  <Button variant="outline" size="sm">Choose File</Button>
                 </CardContent>
               </Card>
             </div>
@@ -218,44 +188,44 @@ const renderStep = () => {
             <FileText className="h-6 w-6" />
             <span>New Application</span>
           </CardTitle>
-          
+
           <div className="flex items-center space-x-2 mt-4">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                  step <= currentStep ? 'bg-primary text-white' : 'bg-muted text-muted-foreground'
-                }`}>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                    step <= currentStep ? "bg-primary text-white" : "bg-muted text-muted-foreground"
+                  }`}
+                >
                   {step}
                 </div>
                 {step < 4 && (
-                  <div className={`w-12 h-0.5 ${step < currentStep ? 'bg-primary' : 'bg-muted'}`} />
+                  <div className={`w-12 h-0.5 ${step < currentStep ? "bg-primary" : "bg-muted"}`} />
                 )}
               </div>
             ))}
           </div>
         </CardHeader>
-        
+
         <CardContent className="p-6">
           {renderStep()}
-          
+
           <div className="flex justify-between mt-8">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
               disabled={currentStep === 1}
             >
               Previous
             </Button>
-            
-            {currentStep < 4 ? (
-              <Button onClick={() => setCurrentStep(currentStep + 1)}>
-                Next
-              </Button>
-            ) : (
-              <Button onClick={handleSubmit}>
-                Submit Application
-              </Button>
-            )}
+
+            <Button
+              onClick={() =>
+                currentStep < 4 ? setCurrentStep(currentStep + 1) : handleSubmit()
+              }
+            >
+              {currentStep < 4 ? "Next" : "Submit Application"}
+            </Button>
           </div>
         </CardContent>
       </Card>
@@ -669,6 +639,164 @@ export const OfficerDashboard = () => {
     </div>
   );
 };
+
+
+// add 
+import React, { useState } from "react";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { FileCheck, FileX, CheckCircle, Clock } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { toast } from "sonner";
+
+export const OfficerDashboard = () => {
+  const [applications] = useState([
+    { id: "TB001234", name: "Ramesh Kumar", village: "Bandipara", state: "Madhya Pradesh", caste: "Gond", schemes: ["PM Kisan", "Jal Jeevan"], status: "pending", priority: "high", documents: ["Aadhar", "Tribal Certificate"] },
+    { id: "TB001235", name: "Sunita Devi", village: "Kalyanpur", state: "Odisha", caste: "Cork", schemes: ["Forest Rights Act 2006"], status: "under_review", priority: "medium", documents: ["Aadhar"] },
+    { id: "TB001236", name: "Raju Patel", village: "Chhota Nagpur", state: "Telangana", caste: "Gond", schemes: ["PM Kisan"], status: "approved", priority: "low", documents: ["Aadhar", "Tribal Certificate", "Land Document"] },
+    { id: "TB001237", name: "Sita Devi", village: "Bandipara", state: "Madhya Pradesh", caste: "Cork", schemes: ["Pradhan Mantri Nasal Biome Yojana"], status: "rejected", priority: "high", documents: ["Aadhar"] }
+  ]);
+
+  const [filterStatus, setFilterStatus] = useState("all");
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "pending": return "bg-yellow-500";
+      case "under_review": return "bg-blue-500";
+      case "approved": return "bg-green-500"; 
+      case "rejected": return "bg-red-500";
+      case "fraud": return "bg-purple-500";
+      default: return "bg-gray-500";
+    }
+  };
+
+  const handleApprove = (id: string) => toast.success(`Application ${id} approved successfully!`);
+  const handleReject = (id: string) => toast.error(`Application ${id} rejected!`);
+
+  // Prepare data for bar chart (state-wise)
+  const states = Array.from(new Set(applications.map(a => a.state)));
+  const barData = states.map(state => {
+    const apps = applications.filter(a => a.state === state);
+    return {
+      state,
+      pending: apps.filter(a => a.status === "pending").length,
+      approved: apps.filter(a => a.status === "approved").length,
+      rejected: apps.filter(a => a.status === "rejected").length,
+      fraud: apps.filter(a => a.status === "fraud").length,
+    };
+  });
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0">
+        <div>
+          <h1 className="text-3xl font-bold">Officer Dashboard</h1>
+          <p className="text-muted-foreground">Manage tribal affairs applications and approvals</p>
+        </div>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card>
+          <CardContent className="flex items-center space-x-4">
+            <div className="p-3 bg-yellow-100 rounded-full">
+              <Clock className="h-6 w-6 text-yellow-600" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold">{applications.filter(a => a.status==="pending").length}</p>
+              <p className="text-sm text-muted-foreground">Pending</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="flex items-center space-x-4">
+            <div className="p-3 bg-green-100 rounded-full">
+              <CheckCircle className="h-6 w-6 text-green-600" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold">{applications.filter(a => a.status==="approved").length}</p>
+              <p className="text-sm text-muted-foreground">Approved</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="flex items-center space-x-4">
+            <div className="p-3 bg-red-100 rounded-full">
+              <FileX className="h-6 w-6 text-red-600" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold">{applications.filter(a => a.status==="rejected").length}</p>
+              <p className="text-sm text-muted-foreground">Rejected</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="flex items-center space-x-4">
+            <div className="p-3 bg-purple-100 rounded-full">
+              <FileCheck className="h-6 w-6 text-purple-600" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold">{applications.filter(a => a.status==="fraud").length}</p>
+              <p className="text-sm text-muted-foreground">Fraud</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* State-wise Bar Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle>State-wise Applications</CardTitle>
+        </CardHeader>
+        <CardContent style={{ height: 300 }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={barData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <XAxis dataKey="state" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="pending" fill="#facc15" />
+              <Bar dataKey="approved" fill="#22c55e" />
+              <Bar dataKey="rejected" fill="#ef4444" />
+              <Bar dataKey="fraud" fill="#a855f7" />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      {/* Applications Table */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Applications Details</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {applications.map(a => (
+            <div key={a.id} className="border p-4 rounded-lg flex flex-col md:flex-row justify-between items-start md:items-center space-y-2 md:space-y-0">
+              <div>
+                <p className="font-semibold">{a.name} ({a.caste})</p>
+                <p className="text-sm text-muted-foreground">
+                  {a.state} - {a.village} | Status: <span className={`font-bold ${getStatusColor(a.status)}`}>{a.status}</span> | Priority: {a.priority}
+                </p>
+                <p className="text-sm">Schemes: {a.schemes.join(", ")}</p>
+                <p className="text-sm">Documents: {a.documents.join(", ")}</p>
+              </div>
+              <div className="flex space-x-2">
+                {a.status === "pending" && (
+                  <>
+                    <Button size="sm" variant="outline" onClick={() => handleApprove(a.id)}>Approve</Button>
+                    <Button size="sm" variant="outline" onClick={() => handleReject(a.id)}>Reject</Button>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
 
 // StatusChecker Component
 export const StatusChecker = () => {
